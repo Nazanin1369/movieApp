@@ -30,6 +30,7 @@
     padding: .5rem;}
         .search__input {
         width: 100%;
+        outline: none;
         padding: .375rem .75rem;
         font-size: 1rem;
         line-height: 1.5;
