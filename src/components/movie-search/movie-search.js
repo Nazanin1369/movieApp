@@ -100,7 +100,7 @@ class MovieSearch extends HTMLElement {
         .then(response => response.json())
         .then(data => data.Search)
         .catch(error => {
-            return Observable.throw('There has been a problem with your fetch operation: ', error.message);
+            return console.error('There has been a problem with your fetch operation: ', error.message);
         });
     }
 
@@ -125,8 +125,12 @@ class MovieSearch extends HTMLElement {
     _displayNoResult() {
         const contentContainer = document.getElementsByClassName('main')[0];
         contentContainer.innerHTML = '';
+        
         const noResultEl = document.createElement('div');
-        noResultEl.textContent = 'No Result';
+        const pEl = document.createElement('p');
+        noResultEl.setAttribute('class', 'no-result__container');
+        pEl.textContent = 'No Movies Found, try another title.';
+        noResultEl.appendChild(pEl);
         contentContainer.appendChild(noResultEl);
     }
 }

@@ -123,6 +123,13 @@ body {
   align-items: center;
   -webkit-overflow-scrolling: touch;}
 
+.no-result__container {
+  justify-content: center;}
+  .no-result__container > p {
+    color: #e50914;
+    font-size: 1rem;
+    font-weight: 500;}
+
 .loader {
   left: 50%;
   top: 50%;

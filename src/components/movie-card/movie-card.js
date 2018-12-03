@@ -1,6 +1,6 @@
 'use strict';
 
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, Observable, merge } from 'rxjs';
 import { distinctUntilChanged, debounceTime, filter, map, switchMap } from 'rxjs/operators';
 
 class MovieCard extends HTMLElement {
@@ -230,35 +230,11 @@ class MovieCard extends HTMLElement {
     }
 
     connectedCallback() {
-        this._moviePoster = this.getAttribute('poster');
-        this._movieTitle = this.getAttribute('title');
-        this._movieType = this.getAttribute('type');
-        this._movieImdb = this.getAttribute('imdbID');
-
-        this.shadowRoot.querySelector('.card__supporting-text').textContent = this._movieTitle;
-        this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', this._movieImdb);
-        this.shadowRoot.querySelector('.card__title').style.backgroundImage = `url(${ this._moviePoster })`;
-        this.shadowRoot.querySelector('.card__actions').textContent = this._movieType;
-
-        // Attach Event Listeners
         this._cardTitle = this.shadowRoot.querySelector('.card__supporting-text');
 
-        this._cardTitleMouseover = fromEvent(this._cardTitle, 'mouseover')
-            .pipe(map(e => e.target.getAttribute('imdbid')))
-            .pipe(debounceTime(750))
-            .subscribe(imdbID => {
-                
-                if(imdbID) {
-                    this._getMovieDetail(imdbID);
-                }
-            });
-
-        this._cardTitleMouseout = fromEvent(this._cardTitle, 'mouseout')
-            .pipe(map(e => e.target))
-            .pipe(debounceTime(750))
-            .subscribe(imdbID => {
-                this._hideDetailTooltip();
-            });
+        this._setCardInfo();
+        this._bindShowEvents(this._cardTitle);
+        this._bindHideEvents(this._cardTitle);
     }
 
     _showDetailTooltip(detail) {
@@ -286,6 +262,56 @@ class MovieCard extends HTMLElement {
         })
         .catch(error => {
             return console.log('There has been a problem with your fetch operation: ', error.message);
+        });
+    }
+
+    _setCardInfo() {
+        this._moviePoster = this.getAttribute('poster');
+        this._movieTitle = this.getAttribute('title');
+        this._movieType = this.getAttribute('type');
+        this._movieImdb = this.getAttribute('imdbID');
+
+        if(this._moviePoster === 'N/A') {
+            this.shadowRoot.querySelector('.card__title').style.backgroundImage = `url(default.png)`;
+        } else {
+            this.shadowRoot.querySelector('.card__title').style.backgroundImage = `url(${ this._moviePoster })`;
+        }
+
+        this.shadowRoot.querySelector('.card__supporting-text').textContent = this._movieTitle;
+        this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', this._movieImdb);
+        this.shadowRoot.querySelector('.card__actions').textContent = this._movieType;
+    }
+
+    _bindShowEvents(element) {
+        const events = merge(
+            fromEvent(element, 'mouseenter')
+                .pipe(map(e => e.target.getAttribute('imdbid')))
+                .pipe(takeUntil(timer(6000)))
+                .pipe(debounceTime(750)),
+            fromEvent(element, 'mouseover')
+                .pipe(map(e => e.target.getAttribute('imdbid')))
+                .pipe(takeUntil(timer(6000)))
+                .pipe(debounceTime(750)),
+            fromEvent(element, 'mousedown').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750)),
+            fromEvent(element, 'touchstart').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750))
+        );
+
+        this._cardTitleMouseover = events.subscribe(imdbID => {
+            if(imdbID) {
+                this._getMovieDetail(imdbID);
+            }
+        });
+    }
+
+    _bindHideEvents(element) {
+
+        const events = merge(
+            fromEvent(element, 'mouseout').pipe(map(e => e.target)).pipe(debounceTime(550)),
+            fromEvent(element, 'touchend').pipe(map(e => e.target)).pipe(debounceTime(550))
+        );
+        
+        this._cardTitleMouseout = events.subscribe(imdbID => {
+            this._hideDetailTooltip();
         });
     }
 
