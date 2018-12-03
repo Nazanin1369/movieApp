@@ -9,7 +9,7 @@ html, body {
   font-family: 'Helvetica', 'Verdana', sans-serif;
   font-weight: 400;
   font-display: optional;
-  color: #444;
+  color: #141414;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
 }
@@ -41,7 +41,10 @@ body {
   -webkit-align-content: stretch;
       -ms-flex-line-pack: stretch;
           align-content: stretch;
-  background: #ececec; }
+  background: #141414; }
+
+a {
+  cursor: pointer;}
 
 .header {
   position: fixed;
@@ -116,11 +119,12 @@ body {
           flex-direction: row;
   -webkit-justify-content: center;
       -ms-flex-pack: center;
-          justify-content: center;
+          align-items: center;
   overflow-x: hidden;
   overflow-y: auto;
   margin: auto;
-  align-items: center;
+  padding-top: 60px;
+  background: #141414;
   -webkit-overflow-scrolling: touch;}
 
 .no-result__container {
@@ -192,15 +196,15 @@ body {
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .card {
     -webkit-flex: 1 50%;
         -ms-flex: 1 50%;
             flex: 1 50%;
     max-width: 100%; }
-
-  .search__container {
-    width: 90%; }
+  
+  #header {
+    display: none;}  
 }
 
 @media screen and (min-width: 500px) and (max-width: 1000px){

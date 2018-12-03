@@ -1,42 +1,55 @@
-.search {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-              -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-        -ms-flex-align: stretch;
-            align-items: stretch;
-    -webkit-align-content: center;
-        -ms-flex-line-pack: center;
-            align-content: center;
-    padding: 65px 5px 5px;
-    color: #FFF;
-    background:#444;}
-    .search__container {
-    width: 50%;
-    padding: .5rem;}
-        .search__input {
+.search__container {
+    position: relative;
+    top: -35%;
+    right: 0%;
+    width: 400px;
+    padding: 0.5rem;
+    margin-right: 20px;}
+    .search__input {
         width: 100%;
         outline: none;
         padding: .375rem .75rem;
         font-size: 1rem;
-        line-height: 1.5;
+        line-height: .5rem;
         color: #495057;
         background-color: #fff;
         background-clip: padding-box;
         border: 1px solid #ced4da;
         border-radius: 1.25rem;
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+    .button__clear {
+        border:1px solid transparent;
+        background-color: transparent;
+        display: inline-block;
+        vertical-align: middle;
+      outline: 0;
+      cursor: pointer;
+    }
+    .button__clear:after {
+        content: "X";
+        display: block;
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        z-index:1;
+        top: -30%;
+        bottom: 0;
+        right: -5%;
+        margin: auto;
+        padding: 2px;
+        border-radius: 50%;
+        text-align: center;
+        color: #141414;;
+        font-weight: normal;
+        font-size: 12px;
+        cursor: pointer;}
+        .search__input:not(:valid) ~ .button__clear {
+            display: none;}
+
+    @media screen and (max-width: 500px) {
+        .search__container {
+            top: -18%;
+            left: 5px;
+            width: 60%;
+            padding: 0.2rem;
+            margin-right: 15px;} }

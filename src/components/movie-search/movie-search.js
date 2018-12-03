@@ -12,83 +12,89 @@ class MovieSearch extends HTMLElement {
         // link.rel = 'stylesheet';
         // link.href = './dist/movie-search.css';
         link.textContent = `
-        .search {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -webkit-flex-direction: row;
-                -ms-flex-direction: row;
-                    flex-direction: row;
-            -webkit-flex-wrap: nowrap;
-                -ms-flex-wrap: nowrap;
-                    flex-wrap: nowrap;
-            -webkit-box-pack: center;
-            -webkit-justify-content: center;
-                      -ms-flex-pack: center;
-                    justify-content: center;
-            -webkit-box-align: stretch;
-            -webkit-align-items: stretch;
-                -ms-flex-align: stretch;
-                    align-items: stretch;
-            -webkit-align-content: center;
-                -ms-flex-line-pack: center;
-                    align-content: center;
-            padding: 60px 5px 5px;
-            color: #FFF;
-            background:#444;}
-            .search__container {
-            width: 50%;
-            padding: .5rem;}
-                .search__input {
+        .search__container {
+            position: relative;
+            top: -35%;
+            right: 0%;
+            width: 400px;
+            padding: 0.5rem;
+            margin-right: 20px;}
+            .search__input {
                 width: 100%;
                 outline: none;
                 padding: .375rem .75rem;
                 font-size: 1rem;
-                line-height: 1.5;
+                line-height: .5rem;
                 color: #495057;
                 background-color: #fff;
                 background-clip: padding-box;
                 border: 1px solid #ced4da;
                 border-radius: 1.25rem;
                 transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+            .button__clear {
+                border:1px solid transparent;
+                background-color: transparent;
+                display: inline-block;
+                vertical-align: middle;
+              outline: 0;
+              cursor: pointer;
+            }
+            .button__clear:after {
+                content: "X";
+                display: block;
+                width: 15px;
+                height: 15px;
+                position: absolute;
+                z-index:1;
+                top: -30%;
+                bottom: 0;
+                right: -5%;
+                margin: auto;
+                padding: 2px;
+                border-radius: 50%;
+                text-align: center;
+                color: #141414;;
+                font-weight: normal;
+                font-size: 12px;
+                cursor: pointer;}
+                .search__input:not(:valid) ~ .button__clear {
+                    display: none;}
+
+            @media screen and (max-width: 500px) {
+                .search__container {
+                    top: -18%;
+                    left: 5px;
+                    width: 60%;
+                    padding: 0.2rem;
+                    margin-right: 15px;} }
         `
 
-        let section = document.createElement('section');
         let searchContainer = document.createElement('div');
+        let searchForm = document.createElement('form');
         let searchInput = document.createElement('input');
+        let clearBtn = document.createElement('button');
 
-        section.setAttribute('class', 'search');
         searchContainer.setAttribute('class', 'search__container');
         searchInput.setAttribute('class', 'search__input');
         searchInput.setAttribute('type', 'text');
+        searchInput.setAttribute('required', 'true');
         searchInput.setAttribute('placeholder', 'Search movies');
+        clearBtn.setAttribute('class', 'button__clear');
+        clearBtn.setAttribute('type', 'reset');
 
-        searchContainer.appendChild(searchInput);
-        section.appendChild(searchContainer);
+        searchForm.appendChild(searchInput);
+        searchForm.appendChild(clearBtn);
+        searchContainer.appendChild(searchForm);
 
         this.shadowRoot.appendChild(link);
-        this.shadowRoot.appendChild(section);
+        this.shadowRoot.appendChild(searchContainer);
     }
 
     connectedCallback() {
         // Attach Event Listeners
         this._searchInput = this.shadowRoot.querySelector('.search__input');
-
-        this._inputSubscription = fromEvent(this._searchInput, 'keyup')
-            .pipe(map(e => e.target.value))
-            .pipe(debounceTime(750))
-            .pipe(distinctUntilChanged())
-            .pipe(switchMap(this._search))
-            .subscribe(movies => {
-                if(movies && movies.length) {
-                    this._updateMovieCards(movies)
-                } else {
-                    this._displayNoResult();
-                }
-            });
+        this._preventFormSubmission();
+        this._bindInputEvents();
     }
 
     disconnectedCallback() {
@@ -132,6 +138,36 @@ class MovieSearch extends HTMLElement {
         pEl.textContent = 'No Movies Found, try another title.';
         noResultEl.appendChild(pEl);
         contentContainer.appendChild(noResultEl);
+    }
+
+    _bindInputEvents() {
+        this._inputSubscription = fromEvent(this._searchInput, 'keyup')
+        .pipe(map(e => {
+            const inputValue = e.target.value;
+            if(inputValue === '') {
+                return 'Beauty';
+            } else {
+                return inputValue;
+            }
+        }))
+        .pipe(debounceTime(750))
+        .pipe(distinctUntilChanged())
+        .pipe(switchMap(this._search))
+        .subscribe(movies => {
+            if(movies && movies.length) {
+                this._updateMovieCards(movies)
+            } else {
+                this._displayNoResult();
+            }
+        });
+    }
+
+    _preventFormSubmission() {
+        this._searchInput.addEventListener('keypress', function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
     }
 }
 

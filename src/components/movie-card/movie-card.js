@@ -28,23 +28,19 @@ class MovieCard extends HTMLElement {
                   flex-direction: column;
           font-size: 16px;
           font-weight: 400;
-          min-height: 500px;
-          overflow: visible;
-          min-width: 300px;
+          min-height: 300px;
+          overflow: hidden;
+          min-width: 200px;
+          max-width: 200px;
           position: relative;
-          margin: 1rem;
-          background: rgb(255,255,255);
+          margin: 1.5rem;
+          background: #ccc;
           border-radius: 2px;
           box-sizing: border-box; }
         
-        .card__media {
-          background-color: rgb(255,64,129);
-          background-repeat: repeat;
-          background-position: 50% 50%;
-          background-size: cover;
-          background-origin: padding-box;
-          background-attachment: scroll;
-          box-sizing: border-box; }
+        .card__image {
+            max-height: 300px;
+        }
         
         .card__title { 
           -webkit-align-items: center;
@@ -59,7 +55,7 @@ class MovieCard extends HTMLElement {
                     -ms-flex-pack: stretch;
                   justify-content: stretch;
           line-height: normal;
-          padding: 16px 16px;
+          padding: 0;
           -webkit-perspective-origin: 165px 56px;
                   perspective-origin: 165px 56px;
           -webkit-transform-origin: 165px 56px;
@@ -121,44 +117,22 @@ class MovieCard extends HTMLElement {
             -webkit-flex-grow: 1;
                 -ms-flex-positive: 1;
                     flex-grow: 1; }
-        
-        .card__menu {
-                position: absolute;
-                right: 16px;
-                top: 16px; }
-        
-        .tooltip {
-          box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-          -webkit-transform: scale(0);
-                  transform: scale(0);
-          -webkit-transform-origin: top center;
-                  transform-origin: top center; 
-          background: rgba(97,97,97, 0.9);
-          color: #fff;
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 14px;
-          min-width: 200px;
-          min-height: 100px;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          padding: 8px;
-          z-index: 2;
-          border-radius: 1rem;
-          text-align: left; }
-        
-        .tooltip.is-active {
-          -webkit-animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
-                  animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards; }
-        
-        .tooltip--large {
-          line-height: 14px;
-          font-size: 14px;
-          padding: 16px; }
 
-        .tooltip > p > strong  {
-            padding-right: 5px;} 
+        .overlay {
+            position: absolute; 
+            top: 0; 
+            background: rgb(0, 0, 0);
+            background: rgba(0, 0, 0, 0.7);
+            color: #f1f1f1; 
+            width: 100%;
+            transition: .5s ease;
+            opacity:0;
+            color: white;
+            font-size: 12px;
+            line-height: 2rem;
+            padding: 5px;
+            z-index: 2;
+            text-align: center;}
         
         @-webkit-keyframes pulse {
           0% {
@@ -187,6 +161,23 @@ class MovieCard extends HTMLElement {
                     transform: scale(1);
             opacity: 1;
             visibility: visible; } }
+
+        @media screen and (max-width: 500px) {
+            .card {
+                min-width: 100px;
+                max-width: 100px;
+                min-height: 200px;
+                margin: 0.1rem;}
+            .card__image {
+                min-width: 100px;
+                max-width: 100px;
+                max-height: 200px;
+            }
+            .overlay {
+                font-size: 10px;
+                line-height: .5rem;
+                padding: 2px;
+                z-index: 2;} }
         `;
 
         // Create Card Elements
@@ -194,15 +185,17 @@ class MovieCard extends HTMLElement {
         card.setAttribute('class', 'card card-shadow--2dp');
 
         let cardTitle = document.createElement('div');
-        cardTitle.setAttribute('class', 'card__title card--expand');
-
+        let cardTitleImg = document.createElement('img');
+        let cardTitleImgOverlay = document.createElement('div');
         let cardText = document.createElement('div');
-        cardText.setAttribute('class', 'card__supporting-text');
-
         let cardActions = document.createElement('div');
+        cardTitle.setAttribute('class', 'card__title card--expand');
+        cardTitleImg.setAttribute('class', 'card__image');
+        cardTitleImgOverlay.setAttribute('class', 'overlay');
+        cardText.setAttribute('class', 'card__supporting-text');
         cardActions.setAttribute('class', 'card__actions card--border');
 
-        let tooltip = document.createElement('div');
+        let overlay = document.createElement('div');
         let titleP = document.createElement('p');
         let yearP = document.createElement('p');
         let directorP = document.createElement('p');
@@ -212,18 +205,16 @@ class MovieCard extends HTMLElement {
         directorP.setAttribute('class', 'directorP');
         imdbP.setAttribute('class', 'imdbP');
 
-        tooltip.setAttribute('class', 'tooltip');
-        tooltip.style.display = 'none';
-
-        tooltip.appendChild(titleP);
-        tooltip.appendChild(yearP);
-        tooltip.appendChild(directorP);
-        tooltip.appendChild(imdbP);
+        cardTitleImgOverlay.appendChild(titleP);
+        cardTitleImgOverlay.appendChild(yearP);
+        cardTitleImgOverlay.appendChild(directorP);
+        cardTitleImgOverlay.appendChild(imdbP);
     
+        cardTitle.appendChild(cardTitleImg);
+        cardTitle.appendChild(cardTitleImgOverlay);
         card.appendChild(cardTitle);
         card.appendChild(cardText);
         card.appendChild(cardActions);
-        card.appendChild(tooltip);
 
         this.shadowRoot.appendChild(link);
         this.shadowRoot.appendChild(card);
@@ -237,28 +228,28 @@ class MovieCard extends HTMLElement {
         this._bindHideEvents(this._cardTitle);
     }
 
-    _showDetailTooltip(detail) {
-        let tooltip = this.shadowRoot.querySelector('.tooltip');
+    _showDetailOverlay(detail) {
+        let overlay = this.shadowRoot.querySelector('.overlay');
         this.shadowRoot.querySelector('.titleP').innerHTML = `<strong>Title:</strong>${detail.Title}`;
         this.shadowRoot.querySelector('.yearP').innerHTML = `<strong>Year:</strong>${detail.Year}`;
         this.shadowRoot.querySelector('.directorP').innerHTML = `<strong>Director:</strong>${detail.Director}`;
         this.shadowRoot.querySelector('.imdbP').innerHTML = `<strong>IMDB:</strong>${detail.imdbRating}`;
     
-        tooltip.style.display = 'block';
-        tooltip.classList.add('is-active');  
+        overlay.style.opacity = '1';
+        overlay.classList.add('is-active');  
     }
 
-    _hideDetailTooltip() {
-        let tooltip = this.shadowRoot.querySelector('.tooltip');
-        tooltip.style.display = 'none';
-        tooltip.classList.remove('is-active');
+    _hideDetailOverlay() {
+        let overlay = this.shadowRoot.querySelector('.overlay');
+        overlay.style.opacity = '0';
+        overlay.classList.remove('is-active');
     }
 
     _getMovieDetail(imdb) {
         return fetch(`http://www.omdbapi.com/?apikey=aba065d3&i=${imdb}`)
         .then(response => response.json())
         .then(data => {
-            this._showDetailTooltip(data);
+            this._showDetailOverlay(data);
         })
         .catch(error => {
             return console.log('There has been a problem with your fetch operation: ', error.message);
@@ -272,9 +263,9 @@ class MovieCard extends HTMLElement {
         this._movieImdb = this.getAttribute('imdbID');
 
         if(this._moviePoster === 'N/A') {
-            this.shadowRoot.querySelector('.card__title').style.backgroundImage = `url(default.png)`;
+            this.shadowRoot.querySelector('.card__image').setAttribute('src', 'default.png');
         } else {
-            this.shadowRoot.querySelector('.card__title').style.backgroundImage = `url(${ this._moviePoster })`;
+            this.shadowRoot.querySelector('.card__image').setAttribute('src', this._moviePoster);
         }
 
         this.shadowRoot.querySelector('.card__supporting-text').textContent = this._movieTitle;
@@ -284,13 +275,8 @@ class MovieCard extends HTMLElement {
 
     _bindShowEvents(element) {
         const events = merge(
-            fromEvent(element, 'mouseenter')
-                .pipe(map(e => e.target.getAttribute('imdbid')))
-                .pipe(takeUntil(timer(6000)))
-                .pipe(debounceTime(750)),
             fromEvent(element, 'mouseover')
                 .pipe(map(e => e.target.getAttribute('imdbid')))
-                .pipe(takeUntil(timer(6000)))
                 .pipe(debounceTime(750)),
             fromEvent(element, 'mousedown').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750)),
             fromEvent(element, 'touchstart').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750))
@@ -310,8 +296,8 @@ class MovieCard extends HTMLElement {
             fromEvent(element, 'touchend').pipe(map(e => e.target)).pipe(debounceTime(550))
         );
         
-        this._cardTitleMouseout = events.subscribe(imdbID => {
-            this._hideDetailTooltip();
+        this._cardTitleMouseout = events.subscribe(e => {
+            this._hideDetailOverlay();
         });
     }
 

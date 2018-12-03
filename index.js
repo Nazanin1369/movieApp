@@ -6,7 +6,11 @@ import './src/components/movie-search/movie-search';
 
 export class MovieApp {
     constructor() {
-        fetch('http://www.omdbapi.com/?apikey=aba065d3&s=Netflix')
+        this.loadInitialMovies();
+    }
+
+    loadInitialMovies() {
+        fetch('http://www.omdbapi.com/?apikey=aba065d3&s=Beauty')
         .then(response => response.json())
         .then(data => {
             let netflixMovies = data.Search;
