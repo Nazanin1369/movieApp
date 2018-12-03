@@ -85,11 +85,17 @@ body {
 .header__title {
   font-weight: 400;
   font-size: 20px;
+  padding-left: 10px;
   margin: 0;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1; 
+}
+.header__image {
+  padding-bottom: 5px;
+  position: relative;
+  top: -5px;
 }
 
 .main {

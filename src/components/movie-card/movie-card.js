@@ -1,5 +1,8 @@
 'use strict';
 
+import { fromEvent, Observable } from 'rxjs';
+import { distinctUntilChanged, debounceTime, filter, map, switchMap } from 'rxjs/operators';
+
 class MovieCard extends HTMLElement {
     constructor() {
         super();
@@ -25,10 +28,9 @@ class MovieCard extends HTMLElement {
                   flex-direction: column;
           font-size: 16px;
           font-weight: 400;
-          min-height: 300px;
+          min-height: 500px;
           overflow: visible;
-          min-width: 330px;
-          z-index: 1;
+          min-width: 300px;
           position: relative;
           margin: 1rem;
           background: rgb(255,255,255);
@@ -137,14 +139,14 @@ class MovieCard extends HTMLElement {
           font-weight: 500;
           line-height: 14px;
           min-width: 200px;
-          min-height: 200px;
+          min-height: 100px;
           position: absolute;
-          top: 10%;
-          left: 30%;
+          top: 50%;
+          left: 50%;
           padding: 8px;
-          z-index: 999;
+          z-index: 2;
           border-radius: 1rem;
-          text-align: center; }
+          text-align: left; }
         
         .tooltip.is-active {
           -webkit-animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
@@ -154,6 +156,9 @@ class MovieCard extends HTMLElement {
           line-height: 14px;
           font-size: 14px;
           padding: 16px; }
+
+        .tooltip > p > strong  {
+            padding-right: 5px;} 
         
         @-webkit-keyframes pulse {
           0% {
@@ -197,61 +202,74 @@ class MovieCard extends HTMLElement {
         let cardActions = document.createElement('div');
         cardActions.setAttribute('class', 'card__actions card--border');
 
-        let cardTitleH2 = document.createElement('h2');
-        let cardTitleSpan = document.createElement('span');
-        cardTitleH2.setAttribute('class', 'card__title-text');
+        let tooltip = document.createElement('div');
+        let titleP = document.createElement('p');
+        let yearP = document.createElement('p');
+        let directorP = document.createElement('p');
+        let imdbP = document.createElement('p');
+        titleP.setAttribute('class', 'titleP');
+        yearP.setAttribute('class', 'yearP');
+        directorP.setAttribute('class', 'directorP');
+        imdbP.setAttribute('class', 'imdbP');
 
-        // let tooltip = document.createElement('div');
-        // let tooltipP1 = document.createElement('p');
-        // let tooltipP2 = document.createElement('p');
-        // let tooltipP3 = document.createElement('p');
-        // let tooltipP4 = document.createElement('p');
+        tooltip.setAttribute('class', 'tooltip');
+        tooltip.style.display = 'none';
 
-        // tooltip.setAttribute('class', 'tooltip');
-        // tooltip.style.display = 'none';
-        // tooltipP1.textContent = movieTitle;
-        // tooltipP2.textContent = movieYear;
-        // tooltipP3.textContent = movieDirector;
-        // tooltipP4.textContent = movieRating;
-        // tooltip.appendChild(tooltipP1);
-        // tooltip.appendChild(tooltipP2);
-        // tooltip.appendChild(tooltipP3);
-        // tooltip.appendChild(tooltipP4);
-
-        cardTitleH2.appendChild(cardTitleSpan);
-        cardTitle.appendChild(cardTitleH2);
-
+        tooltip.appendChild(titleP);
+        tooltip.appendChild(yearP);
+        tooltip.appendChild(directorP);
+        tooltip.appendChild(imdbP);
+    
         card.appendChild(cardTitle);
         card.appendChild(cardText);
         card.appendChild(cardActions);
-        //card.appendChild(tooltip);
+        card.appendChild(tooltip);
 
         this.shadowRoot.appendChild(link);
         this.shadowRoot.appendChild(card);
-
-        // this._showDetailTooltip = this._showDetailTooltip.bind(this);
-        // this._hideDetailTooltip = this._hideDetailTooltip.bind(this);
     }
 
     connectedCallback() {
         this._moviePoster = this.getAttribute('poster');
         this._movieTitle = this.getAttribute('title');
         this._movieType = this.getAttribute('type');
+        this._movieImdb = this.getAttribute('imdbID');
 
         this.shadowRoot.querySelector('.card__supporting-text').textContent = this._movieTitle;
+        this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', this._movieImdb);
         this.shadowRoot.querySelector('.card__title').style.backgroundImage = `url(${ this._moviePoster })`;
         this.shadowRoot.querySelector('.card__actions').textContent = this._movieType;
-        console.log(this._moviePoster)
+
         // Attach Event Listeners
-        // this._titleEle = this.shadowRoot.querySelector('.card__title');
-        // this._titleEle.addEventListener('mouseover', this._showDetailTooltip);
-        // this._titleEle.addEventListener('mouseout', this._hideDetailTooltip);
+        this._cardTitle = this.shadowRoot.querySelector('.card__supporting-text');
+
+        this._cardTitleMouseover = fromEvent(this._cardTitle, 'mouseover')
+            .pipe(map(e => e.target.getAttribute('imdbid')))
+            .pipe(debounceTime(750))
+            .subscribe(imdbID => {
+                
+                if(imdbID) {
+                    this._getMovieDetail(imdbID);
+                }
+            });
+
+        this._cardTitleMouseout = fromEvent(this._cardTitle, 'mouseout')
+            .pipe(map(e => e.target))
+            .pipe(debounceTime(750))
+            .subscribe(imdbID => {
+                this._hideDetailTooltip();
+            });
     }
 
-    _showDetailTooltip(event) {
+    _showDetailTooltip(detail) {
         let tooltip = this.shadowRoot.querySelector('.tooltip');
+        this.shadowRoot.querySelector('.titleP').innerHTML = `<strong>Title:</strong>${detail.Title}`;
+        this.shadowRoot.querySelector('.yearP').innerHTML = `<strong>Year:</strong>${detail.Year}`;
+        this.shadowRoot.querySelector('.directorP').innerHTML = `<strong>Director:</strong>${detail.Director}`;
+        this.shadowRoot.querySelector('.imdbP').innerHTML = `<strong>IMDB:</strong>${detail.imdbRating}`;
+    
         tooltip.style.display = 'block';
-        tooltip.classList.add('is-active');
+        tooltip.classList.add('is-active');  
     }
 
     _hideDetailTooltip() {
@@ -260,9 +278,20 @@ class MovieCard extends HTMLElement {
         tooltip.classList.remove('is-active');
     }
 
+    _getMovieDetail(imdb) {
+        return fetch(`http://www.omdbapi.com/?apikey=aba065d3&i=${imdb}`)
+        .then(response => response.json())
+        .then(data => {
+            this._showDetailTooltip(data);
+        })
+        .catch(error => {
+            return console.log('There has been a problem with your fetch operation: ', error.message);
+        });
+    }
+
     disconnectedCallback() {
-        // this._titleEle.removeEventListener('mouseover', this._showDetailTooltip);
-        // this._titleEle.removeEventListener('mouseout', this._hideDetailTooltip);
+        this._cardTitleMouseover.unsubscribe();
+        this._cardTitleMouseout.unsubscribe();
     }
 }
 

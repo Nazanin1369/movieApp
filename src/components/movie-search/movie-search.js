@@ -1,5 +1,5 @@
 'use strict';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 import { distinctUntilChanged, debounceTime, filter, map, switchMap } from 'rxjs/operators';
 
 class MovieSearch extends HTMLElement {
@@ -36,7 +36,7 @@ class MovieSearch extends HTMLElement {
             -webkit-align-content: center;
                 -ms-flex-line-pack: center;
                     align-content: center;
-            padding: 65px 5px 5px;
+            padding: 60px 5px 5px;
             color: #FFF;
             background:#444;}
             .search__container {
@@ -59,18 +59,14 @@ class MovieSearch extends HTMLElement {
         let section = document.createElement('section');
         let searchContainer = document.createElement('div');
         let searchInput = document.createElement('input');
-        let searchResults = document.createElement('datalist');
 
         section.setAttribute('class', 'search');
         searchContainer.setAttribute('class', 'search__container');
         searchInput.setAttribute('class', 'search__input');
         searchInput.setAttribute('type', 'text');
         searchInput.setAttribute('placeholder', 'Search movies');
-        searchInput.setAttribute('list', 'movies');
-        searchResults.setAttribute('id', 'movies');
 
         searchContainer.appendChild(searchInput);
-        searchContainer.appendChild(searchResults);
         section.appendChild(searchContainer);
 
         this.shadowRoot.appendChild(link);
@@ -83,11 +79,16 @@ class MovieSearch extends HTMLElement {
 
         this._inputSubscription = fromEvent(this._searchInput, 'keyup')
             .pipe(map(e => e.target.value))
-            .pipe(filter(text => text.length > 2))
             .pipe(debounceTime(750))
             .pipe(distinctUntilChanged())
             .pipe(switchMap(this._search))
-            .subscribe(movies => this._buildDataList(movies));
+            .subscribe(movies => {
+                if(movies && movies.length) {
+                    this._updateMovieCards(movies)
+                } else {
+                    this._displayNoResult();
+                }
+            });
     }
 
     disconnectedCallback() {
@@ -103,35 +104,30 @@ class MovieSearch extends HTMLElement {
         });
     }
 
-    _buildDataList(items) {
-        this._updateMovieCards(items)
-        let documentFragmentEl = document.createDocumentFragment();
-        for(let item of items) {
-            let itemEl = document.createElement('option');
-            itemEl.setAttribute('value', item.Title);
-            documentFragmentEl.appendChild(itemEl);
-        }
-
-        this.shadowRoot.getElementById('movies').appendChild(documentFragmentEl);
-
-    }
-
     _updateMovieCards(items) {
+        let documentFragmentEl = document.createDocumentFragment();
         const contentContainer = document.getElementsByClassName('main')[0];
         contentContainer.innerHTML = '';
 
-        let documentFragmentEl = document.createDocumentFragment();
         for(let item of items) {
             let itemEl = document.createElement('movie-card');
             itemEl.setAttribute('title', item.Title);
             itemEl.setAttribute('poster', item.Poster);
             itemEl.setAttribute('type', item.Type);
+            itemEl.setAttribute('imdbID', item.imdbID);
             
             documentFragmentEl.appendChild(itemEl);
         }
 
         contentContainer.appendChild(documentFragmentEl);
+    }
 
+    _displayNoResult() {
+        const contentContainer = document.getElementsByClassName('main')[0];
+        contentContainer.innerHTML = '';
+        const noResultEl = document.createElement('div');
+        noResultEl.textContent = 'No Result';
+        contentContainer.appendChild(noResultEl);
     }
 }
 
