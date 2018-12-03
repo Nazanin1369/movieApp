@@ -10,7 +10,7 @@ export class MovieApp {
     }
 
     loadInitialMovies() {
-        fetch('http://www.omdbapi.com/?apikey=aba065d3&s=Beauty')
+        fetch('http://www.omdbapi.com/?apikey=aba065d3&s=Strange')
         .then(response => response.json())
         .then(data => {
             let netflixMovies = data.Search;

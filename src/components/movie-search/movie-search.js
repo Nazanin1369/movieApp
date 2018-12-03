@@ -145,7 +145,7 @@ class MovieSearch extends HTMLElement {
         .pipe(map(e => {
             const inputValue = e.target.value;
             if(inputValue === '') {
-                return 'Beauty';
+                return 'Strange';
             } else {
                 return inputValue;
             }

@@ -37,10 +37,12 @@ class MovieCard extends HTMLElement {
           background: #ccc;
           border-radius: 2px;
           box-sizing: border-box; }
+        .card:hover {
+            border: 3px solid #e50914;
+        }
         
         .card__image {
-            max-height: 300px;
-        }
+            max-height: 300px;}
         
         .card__title { 
           -webkit-align-items: center;
@@ -130,9 +132,11 @@ class MovieCard extends HTMLElement {
             color: white;
             font-size: 12px;
             line-height: 2rem;
-            padding: 5px;
+            padding: 10px;
             z-index: 2;
-            text-align: center;}
+            text-align: left;}
+            .overlay p > strong {
+                padding-right: 5px;}
         
         @-webkit-keyframes pulse {
           0% {
