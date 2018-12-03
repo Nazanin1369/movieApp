@@ -268,7 +268,7 @@ class MovieCard extends HTMLElement {
             cardImageEl.style.opacity = '0.3';
             cardImageEl.setAttribute('width', '200');
             cardImageEl.setAttribute('height', '290');
-            cardImageEl.setAttribute('src', 'https://image.flaticon.com/icons/svg/1191/1191289.svg');
+            cardImageEl.setAttribute('src', 'https://image.flaticon.com/icons/svg/272/272348.svg');
         } else {
             cardImageEl.setAttribute('src', moviePoster);
         }
