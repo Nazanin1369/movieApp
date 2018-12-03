@@ -34,7 +34,7 @@ class MovieCard extends HTMLElement {
           max-width: 200px;
           position: relative;
           margin: 1.5rem;
-          background: #ccc;
+          background: black;
           border-radius: 2px;
           box-sizing: border-box; }
         .card:hover {
@@ -63,6 +63,7 @@ class MovieCard extends HTMLElement {
           -webkit-transform-origin: 165px 56px;
                   transform-origin: 165px 56px;
           box-sizing: border-box; }
+          
           .card__title.card--border {
             border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
         
@@ -82,38 +83,26 @@ class MovieCard extends HTMLElement {
           -webkit-transform-origin: 149px 48px;
                   transform-origin: 149px 48px;
           margin: 0; }
-          .card__title-text span {
-            color: #fff; 
-            letter-spacing: -1px; 
-            font-weight: 400;
-            background: rgb(0, 0, 0); /* fallback color */
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px; }
-        
-        .card__subtitle-text {
-          font-size: 14px;
-          color: rgba(0,0,0, 0.54);
-          margin: 0; }
         
         .card__supporting-text {
-          color: rgba(0,0,0, 0.54);
+          color: #fff;
           font-size: 1rem;
           line-height: 18px;
           overflow: hidden;
           padding: 16px 16px;
           width: 90%; }
           .card__supporting-text.card--border {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+            border-bottom: 1px solid rgba(256, 256, 256, 0.1); }
         
         .card__actions {
-          font-size: 16px;
+          font-size: 12px;
+          color: #fff;
           line-height: normal;
           width: 100%;
-          background-color: transparent;
           padding: 8px;
           box-sizing: border-box; }
           .card__actions.card--border {
-            border-top: 1px solid rgba(0, 0, 0, 0.1); }
+            border-top: 1px solid rgba(256, 256, 256, 0.1); }
         
         .card--expand {
             -webkit-flex-grow: 1;
@@ -193,11 +182,15 @@ class MovieCard extends HTMLElement {
         let cardTitleImgOverlay = document.createElement('div');
         let cardText = document.createElement('div');
         let cardActions = document.createElement('div');
+        let cardActionsImage = document.createElement('img');
         cardTitle.setAttribute('class', 'card__title card--expand');
         cardTitleImg.setAttribute('class', 'card__image');
         cardTitleImgOverlay.setAttribute('class', 'overlay');
         cardText.setAttribute('class', 'card__supporting-text');
         cardActions.setAttribute('class', 'card__actions card--border');
+        cardActionsImage.setAttribute('class', 'card__action-image');
+        cardActionsImage.setAttribute('width', '20');
+        cardActionsImage.setAttribute('height', '20');
 
         let overlay = document.createElement('div');
         let titleP = document.createElement('p');
@@ -214,6 +207,7 @@ class MovieCard extends HTMLElement {
         cardTitleImgOverlay.appendChild(directorP);
         cardTitleImgOverlay.appendChild(imdbP);
     
+        cardActions.appendChild(cardActionsImage);
         cardTitle.appendChild(cardTitleImg);
         cardTitle.appendChild(cardTitleImgOverlay);
         card.appendChild(cardTitle);
@@ -261,27 +255,36 @@ class MovieCard extends HTMLElement {
     }
 
     _setCardInfo() {
-        this._moviePoster = this.getAttribute('poster');
-        this._movieTitle = this.getAttribute('title');
-        this._movieType = this.getAttribute('type');
-        this._movieImdb = this.getAttribute('imdbID');
+        const moviePoster = this.getAttribute('poster');
+        const movieTitle = this.getAttribute('title');
+        const movieType = this.getAttribute('type');
+        const movieImdb = this.getAttribute('imdbID');
 
-        if(this._moviePoster === 'N/A') {
-            this.shadowRoot.querySelector('.card__image').setAttribute('src', 'default.png');
+        let typeIconEl = this.shadowRoot.querySelector('.card__action-image');
+        let cardImageEl = this.shadowRoot.querySelector('.card__image');
+       
+
+        if(moviePoster === 'N/A') {
+            cardImageEl.setAttribute('src', 'default.png');
         } else {
-            this.shadowRoot.querySelector('.card__image').setAttribute('src', this._moviePoster);
+            cardImageEl.setAttribute('src', moviePoster);
         }
 
-        this.shadowRoot.querySelector('.card__supporting-text').textContent = this._movieTitle;
-        this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', this._movieImdb);
-        this.shadowRoot.querySelector('.card__actions').textContent = this._movieType;
+        if(movieType === 'movie') {
+            typeIconEl.setAttribute('src', 'https://image.flaticon.com/icons/png/512/1077/1077643.png');
+            typeIconEl.setAttribute('title', 'Movie');
+        } else {
+            typeIconEl.setAttribute('src', 'https://image.flaticon.com/icons/svg/1234/1234532.svg');
+            typeIconEl.setAttribute('title', 'TV Show');
+        }
+
+        this.shadowRoot.querySelector('.card__supporting-text').textContent = movieTitle;
+        this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', movieImdb);
     }
 
     _bindShowEvents(element) {
         const events = merge(
-            fromEvent(element, 'mouseover')
-                .pipe(map(e => e.target.getAttribute('imdbid')))
-                .pipe(debounceTime(750)),
+            fromEvent(element, 'mouseover').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750)),
             fromEvent(element, 'mousedown').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750)),
             fromEvent(element, 'touchstart').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750))
         );
