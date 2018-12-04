@@ -22,6 +22,7 @@
     "node": ">=10"
   },
   "dependencies": {
+    "nprogress": "^0.2.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "src": "^1.1.2"

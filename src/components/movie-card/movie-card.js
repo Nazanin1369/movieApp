@@ -1,7 +1,6 @@
 'use strict';
 
-import { fromEvent, Observable, merge } from 'rxjs';
-import { distinctUntilChanged, debounceTime, filter, map, switchMap } from 'rxjs/operators';
+import { ApiService } from '../../apiService';
 
 class MovieCard extends HTMLElement {
     constructor() {
@@ -20,6 +19,7 @@ class MovieCard extends HTMLElement {
           display: -webkit-flex;
           display: -ms-flexbox;
           display: flex;
+          border: 3px solid black;
           -webkit-flex: 1 25%;
               -ms-flex: 1 25%;
                   flex: 1 25%;
@@ -28,7 +28,7 @@ class MovieCard extends HTMLElement {
                   flex-direction: column;
           font-size: 16px;
           font-weight: 400;
-          min-height: 300px;
+          height: 400px;
           overflow: hidden;
           min-width: 200px;
           max-width: 200px;
@@ -49,6 +49,7 @@ class MovieCard extends HTMLElement {
               -ms-flex-align: center;
                   align-items: center;
           color: #fff;
+          padding: 5px;
           display: block;
           display: -webkit-flex;
           display: -ms-flexbox;
@@ -170,8 +171,7 @@ class MovieCard extends HTMLElement {
                 font-size: 10px;
                 line-height: .5rem;
                 padding: 2px;
-                z-index: 2;} }
-        `;
+                z-index: 2;} }`;
 
         // Create Card Elements
         let card = document.createElement('div');
@@ -222,36 +222,7 @@ class MovieCard extends HTMLElement {
         this._cardTitle = this.shadowRoot.querySelector('.card__supporting-text');
 
         this._setCardInfo();
-        this._bindShowEvents(this._cardTitle);
-        this._bindHideEvents(this._cardTitle);
-    }
-
-    _showDetailOverlay(detail) {
-        let overlay = this.shadowRoot.querySelector('.overlay');
-        this.shadowRoot.querySelector('.titleP').innerHTML = `<strong>Title:</strong>${detail.Title}`;
-        this.shadowRoot.querySelector('.yearP').innerHTML = `<strong>Year:</strong>${detail.Year}`;
-        this.shadowRoot.querySelector('.directorP').innerHTML = `<strong>Director:</strong>${detail.Director}`;
-        this.shadowRoot.querySelector('.imdbP').innerHTML = `<strong>IMDB:</strong>${detail.imdbRating}`;
-    
-        overlay.style.opacity = '1';
-        overlay.classList.add('is-active');  
-    }
-
-    _hideDetailOverlay() {
-        let overlay = this.shadowRoot.querySelector('.overlay');
-        overlay.style.opacity = '0';
-        overlay.classList.remove('is-active');
-    }
-
-    _getMovieDetail(imdb) {
-        return fetch(`http://www.omdbapi.com/?apikey=aba065d3&i=${imdb}`)
-        .then(response => response.json())
-        .then(data => {
-            this._showDetailOverlay(data);
-        })
-        .catch(error => {
-            return console.log('There has been a problem with your fetch operation: ', error.message);
-        });
+        this._bindEvents(this._cardTitle);
     }
 
     _setCardInfo() {
@@ -285,35 +256,45 @@ class MovieCard extends HTMLElement {
         this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', movieImdb);
     }
 
-    _bindShowEvents(element) {
-        const events = merge(
-            fromEvent(element, 'mouseover').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750)),
-            fromEvent(element, 'mousedown').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750)),
-            fromEvent(element, 'touchstart').pipe(map(e => e.target.getAttribute('imdbid'))).pipe(debounceTime(750))
-        );
-
-        this._cardTitleMouseover = events.subscribe(imdbID => {
-            if(imdbID) {
-                this._getMovieDetail(imdbID);
-            }
-        });
+    _bindEvents(element) {
+        element.addEventListener('mouseenter', this._showOverlay.bind(this));
+        element.addEventListener('mouseleave', this._hideOverlay.bind(this));
+        element.addEventListener('touchstart', this._showOverlay.bind(this));
+        element.addEventListener('touchend', this._hideOverlay.bind(this));
     }
 
-    _bindHideEvents(element) {
+    _showOverlay(event) {
+        const imdbID = event.target.getAttribute('imdbid');
+        const that = this;
+        this._timer = setTimeout(() => {
+            ApiService.searchByImdbId(imdbID)
+                .then(detail => this._drawOverlay(detail));
+        }, 1000);
+    }
 
-        const events = merge(
-            fromEvent(element, 'mouseout').pipe(map(e => e.target)).pipe(debounceTime(550)),
-            fromEvent(element, 'touchend').pipe(map(e => e.target)).pipe(debounceTime(550))
-        );
-        
-        this._cardTitleMouseout = events.subscribe(e => {
-            this._hideDetailOverlay();
-        });
+    _hideOverlay(event) {
+        clearTimeout(this._timer);
+        let overlay = this.shadowRoot.querySelector('.overlay');
+        overlay.style.opacity = '0';
+        overlay.classList.remove('is-active');
+    }
+
+    _drawOverlay(detail) {
+        let overlay = this.shadowRoot.querySelector('.overlay');
+        this.shadowRoot.querySelector('.titleP').innerHTML = `<strong>Title:</strong>${detail.Title}`;
+        this.shadowRoot.querySelector('.yearP').innerHTML = `<strong>Year:</strong>${detail.Year}`;
+        this.shadowRoot.querySelector('.directorP').innerHTML = `<strong>Director:</strong>${detail.Director}`;
+        this.shadowRoot.querySelector('.imdbP').innerHTML = `<strong>IMDB:</strong>${detail.imdbRating}`;
+    
+        overlay.style.opacity = '1';
+        overlay.classList.add('is-active');  
     }
 
     disconnectedCallback() {
-        this._cardTitleMouseover.unsubscribe();
-        this._cardTitleMouseout.unsubscribe();
+        this._cardTitle.removeEventListener('mouseenter', this._showOverlay);
+        this._cardTitle.removeEventListener('mouseleave', this._hideOverlay);
+        this._cardTitle.removeEventListener('touchstart', this._showOverlay);
+        this._cardTitle.removeEventListener('touchend', this._hideOverlay);
     }
 }
 

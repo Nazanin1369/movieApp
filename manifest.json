@@ -1,6 +1,6 @@
 {
-  "name": "Movie",
-  "short_name": "Movie",
+  "name": "MovieS",
+  "short_name": "MovieS",
   "icons": [
     {
      "src": "\/android-icon-36x36.png",
@@ -41,6 +41,6 @@
    ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#3E4EB8",
+  "background_color": "#141414",
   "theme_color": "#e50914"
 }

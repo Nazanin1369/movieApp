@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie App</title><link rel="icon" href="favicon.ico">
   <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
+  <link rel="apple-touch-icon" href="images/icons/apple-icon-152x152.png">
   <!-- Add to home screen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Movie App">
-  <link rel="apple-touch-icon" href="images/icons/apple-icon-152x152.png">
-  <link rel="default-poster" href="images/default.png">
   <meta name="msapplication-TileImage" content="images/icons/apple-icon-144x144.png">
   <meta name="msapplication-TileColor" content="#2F3BA2">
 </head>
@@ -23,8 +22,9 @@
     <h1 id="header" class="header__title"><a aria-label="MovieApp">Movie App</a></h1>
     <movie-search></movie-search>
   </header>
-  
   <main class="main"></main>
-  <script src="index.js" async></script>
+  <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+  <script src="src/index.js" async></script>
+  <script src="src/apiService.js" async></script>
 </body>
 </html>
