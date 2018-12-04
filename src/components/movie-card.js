@@ -1,6 +1,6 @@
 'use strict';
 
-import { ApiService } from '../../apiService';
+import { ApiService } from '../services/apiService';
 
 class MovieCard extends HTMLElement {
     constructor() {

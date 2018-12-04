@@ -4,8 +4,8 @@ import NProgress from 'nprogress';
 import { fromEvent, Observable } from 'rxjs';
 import { distinctUntilChanged, debounceTime, filter, map, switchMap } from 'rxjs/operators';
 
-import { ApiService } from '../../apiService';
-import { DomService } from '../../domService';
+import { ApiService } from '../services/apiService';
+import { DomService } from '../services/domService';
 
 class MovieSearch extends HTMLElement {
     constructor() {
