@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="theme-color" content="#e50914"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie App</title>
@@ -19,18 +20,18 @@
 
 <body>
   <header class="header">
-    <img class="header__image " height="40" width="40" src="images/popcorn.png">
-    <h1 id="header" class="header__title"><a aria-label="MovieApp">Movie App</a></h1>
+    <a name="popcorn-link" href="."><img class="header__image " alt="popcorn" height="40" width="40" src="images/popcorn.webp"></a>
+    <h1 id="header" class="header__title"><a aria-label="MovieApp" href=".">Movie App</a></h1>
     <movie-search></movie-search>
   </header>
   <main class="main"></main>
   <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
   <script src="src/index.js" async></script>
   <script>
-       if ('serviceWorker' in navigator) {
+        if ('serviceWorker' in navigator) {
             window.addEventListener('load', function () {
                 navigator.serviceWorker.register('/service-worker.js', );
-                
+
                 //navigator.serviceWorker.ready always resolve
                 navigator.serviceWorker.ready.then(function (registration) {
                     console.log('Service worker successfully registered on scope', registration.scope);

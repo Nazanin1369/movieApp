@@ -65,11 +65,14 @@ class MovieSearch extends HTMLElement {
 
             @media screen and (max-width: 500px) {
                 .search__container {
-                    top: -18%;
+                    top: -5%;
                     left: 5px;
-                    width: 60%;
+                    width: 100%;
                     padding: 0.2rem;
-                    margin-right: 15px;} }`;
+                    margin-right: 15px;}
+                    .search__input {
+                        font-size: .8rem;
+                    }}`;
 
         let searchContainer = document.createElement('div');
         let searchForm = document.createElement('form');
@@ -82,6 +85,7 @@ class MovieSearch extends HTMLElement {
         searchInput.setAttribute('required', 'true');
         searchInput.setAttribute('name', 'msearch');
         searchInput.setAttribute('placeholder', 'Search movies');
+        searchInput.setAttribute('aria-label', 'Movie Title');
         clearBtn.setAttribute('class', 'button__clear');
         clearBtn.setAttribute('type', 'reset');
 

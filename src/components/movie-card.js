@@ -13,7 +13,7 @@ class MovieCard extends HTMLElement {
         // link.href = './movie-card.css';
         link.textContent = `
         .card-shadow--2dp {
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);}
+            box-shadow: 0 2px 2px 0 rgba(255,0,0,.14), 0 3px 1px -2px rgba(255,0,0,.2), 0 1px 5px 0 rgba(255,0,0,.12);}
 
         .card {
           display: -webkit-flex;
@@ -161,12 +161,17 @@ class MovieCard extends HTMLElement {
                 min-width: 100px;
                 max-width: 100px;
                 min-height: 200px;
-                margin: 0.1rem;}
-            .card__image {
-                min-width: 100px;
-                max-width: 100px;
                 max-height: 200px;
-            }
+                margin: 0.3rem;}
+                .card__supporting-text {
+                    color: #fff;
+                    font-size: .7rem;
+                    padding: 2px;
+                    width: 90%;}
+                .card__image {
+                    min-width: 100px;
+                    max-width: 100px;
+                    max-height: 100px;}
             .overlay {
                 font-size: 10px;
                 line-height: .5rem;
@@ -258,10 +263,10 @@ class MovieCard extends HTMLElement {
     }
 
     _bindEvents(element) {
-        element.addEventListener('mouseenter', this._showOverlay.bind(this));
-        element.addEventListener('mouseleave', this._hideOverlay.bind(this));
-        element.addEventListener('touchstart', this._showOverlay.bind(this));
-        element.addEventListener('touchend', this._hideOverlay.bind(this));
+        element.addEventListener('mouseenter', this._showOverlay.bind(this), {passive: true});
+        element.addEventListener('mouseleave', this._hideOverlay.bind(this), {passive: true});
+        element.addEventListener('touchstart', this._showOverlay.bind(this), {passive: true});
+        element.addEventListener('touchend', this._hideOverlay.bind(this), {passive: true});
     }
 
     _showOverlay(event) {
