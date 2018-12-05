@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie App</title><link rel="icon" href="favicon.ico">
-  <link rel="manifest" href="/manifest.json">
+  <title>Movie App</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
   <link rel="apple-touch-icon" href="images/icons/apple-icon-152x152.png">
   <!-- Add to home screen for Safari on iOS -->
@@ -26,15 +27,16 @@
   <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
   <script src="src/index.js" async></script>
   <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
-            // Registration was successful
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }).catch(function(err) {
-            // registration failed :(
-            console.log('ServiceWorker registration failed: ', err);
-        });
-    }
+       if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js', );
+                
+                //navigator.serviceWorker.ready always resolve
+                navigator.serviceWorker.ready.then(function (registration) {
+                    console.log('Service worker successfully registered on scope', registration.scope);
+                });
+            });
+        }
   </script>
 </body>
 </html>

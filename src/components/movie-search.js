@@ -112,11 +112,7 @@ class MovieSearch extends HTMLElement {
         .pipe(switchMap(ApiService.searchByTitle))
         .subscribe(movies => {
             NProgress.done();
-            if(movies && movies.length) {
-                DomService.drawMovieCards(movies);
-            } else {
-                DomService.displayNoResult();
-            }
+            DomService.drawMovieCards(movies);
         });
     }
 

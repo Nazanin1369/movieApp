@@ -14,7 +14,7 @@ class MovieCard extends HTMLElement {
         link.textContent = `
         .card-shadow--2dp {
             box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);}
-          
+
         .card {
           display: -webkit-flex;
           display: -ms-flexbox;
@@ -40,11 +40,11 @@ class MovieCard extends HTMLElement {
         .card:hover {
             border: 3px solid #e50914;
         }
-        
+
         .card__image {
             max-height: 300px;}
-        
-        .card__title { 
+
+        .card__title {
           -webkit-align-items: center;
               -ms-flex-align: center;
                   align-items: center;
@@ -64,10 +64,10 @@ class MovieCard extends HTMLElement {
           -webkit-transform-origin: 165px 56px;
                   transform-origin: 165px 56px;
           box-sizing: border-box; }
-          
+
           .card__title.card--border {
             border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-        
+
         .card__title-text {
           -webkit-align-self: flex-end;
               -ms-flex-item-align: end;
@@ -84,7 +84,7 @@ class MovieCard extends HTMLElement {
           -webkit-transform-origin: 149px 48px;
                   transform-origin: 149px 48px;
           margin: 0; }
-        
+
         .card__supporting-text {
           color: #fff;
           font-size: 1rem;
@@ -94,7 +94,7 @@ class MovieCard extends HTMLElement {
           width: 90%; }
           .card__supporting-text.card--border {
             border-bottom: 1px solid rgba(256, 256, 256, 0.1); }
-        
+
         .card__actions {
           font-size: 12px;
           color: #fff;
@@ -104,18 +104,18 @@ class MovieCard extends HTMLElement {
           box-sizing: border-box; }
           .card__actions.card--border {
             border-top: 1px solid rgba(256, 256, 256, 0.1); }
-        
+
         .card--expand {
             -webkit-flex-grow: 1;
                 -ms-flex-positive: 1;
                     flex-grow: 1; }
 
         .overlay {
-            position: absolute; 
-            top: 0; 
+            position: absolute;
+            top: 0;
             background: rgb(0, 0, 0);
             background: rgba(0, 0, 0, 0.7);
-            color: #f1f1f1; 
+            color: #f1f1f1;
             width: 100%;
             transition: .5s ease;
             opacity:0;
@@ -127,7 +127,7 @@ class MovieCard extends HTMLElement {
             text-align: left;}
             .overlay p > strong {
                 padding-right: 5px;}
-        
+
         @-webkit-keyframes pulse {
           0% {
             -webkit-transform: scale(0);
@@ -141,7 +141,7 @@ class MovieCard extends HTMLElement {
                     transform: scale(1);
             opacity: 1;
             visibility: visible; } }
-        
+
         @keyframes pulse {
           0% {
             -webkit-transform: scale(0);
@@ -206,7 +206,7 @@ class MovieCard extends HTMLElement {
         cardTitleImgOverlay.appendChild(yearP);
         cardTitleImgOverlay.appendChild(directorP);
         cardTitleImgOverlay.appendChild(imdbP);
-    
+
         cardActions.appendChild(cardActionsImage);
         cardTitle.appendChild(cardTitleImg);
         cardTitle.appendChild(cardTitleImgOverlay);
@@ -233,8 +233,9 @@ class MovieCard extends HTMLElement {
 
         let typeIconEl = this.shadowRoot.querySelector('.card__action-image');
         let cardImageEl = this.shadowRoot.querySelector('.card__image');
-       
 
+
+        cardImageEl.setAttribute('alt', movieTitle);
         if(moviePoster === 'N/A') {
             cardImageEl.style.opacity = '0.3';
             cardImageEl.setAttribute('width', '200');
@@ -285,9 +286,9 @@ class MovieCard extends HTMLElement {
         this.shadowRoot.querySelector('.yearP').innerHTML = `<strong>Year:</strong>${detail.Year}`;
         this.shadowRoot.querySelector('.directorP').innerHTML = `<strong>Director:</strong>${detail.Director}`;
         this.shadowRoot.querySelector('.imdbP').innerHTML = `<strong>IMDB:</strong>${detail.imdbRating}`;
-    
+
         overlay.style.opacity = '1';
-        overlay.classList.add('is-active');  
+        overlay.classList.add('is-active');
     }
 
     disconnectedCallback() {

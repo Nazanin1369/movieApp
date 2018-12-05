@@ -3,7 +3,6 @@
 import '../styles/inline.css'
 import './components/movie-card';
 import './components/movie-search';
-import '../service-worker';
 
 import { ApiService } from './services/apiService';
 import { DomService } from './services/domService';
@@ -13,7 +12,6 @@ import { DomService } from './services/domService';
  */
 export class MovieApp {
     constructor() {
-        // this.registerServiceWorker();
         this.loadInitialMovies();
     }
 
@@ -23,23 +21,20 @@ export class MovieApp {
     loadInitialMovies() {
         console.log('loading initial movies')
         ApiService.searchByTitle('Strange')
-            .then(movies => DomService.drawMovieCards(movies))
-            .catch( error => console.log(error));
-    }
-
-    registerServiceWorker() {
-        // if ('serviceWorker' in navigator) {
-        //     navigator.serviceWorker.register('../service-worker.js').then(function(registration) {
-        //         // Registration was successful
-        //         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        //     }).catch(function(err) {
-        //         // registration failed :(
-        //         console.log('ServiceWorker registration failed: ', err);
-        //     });
-        // }
+            .then(movies => {
+                if(typeof movies  === "undefined") {
+                    DomService.displayErrorContainer();
+                    return;
+                }
+                if (movies.length > 0) {
+                    DomService.drawMovieCards(movies);
+                } else {
+                    DomService.displayNoResult();
+                }
+            })
+            .catch( error => DomService.displayErrorContainer());
     }
 }
-
 // Instantiates the application
 new MovieApp();
 
