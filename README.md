@@ -1,4 +1,5 @@
 ## Instant Movie Search
+![alt text](./images/popcorn.png "Movie App")
 
 This application uses Open Movie Database API to perform an instant search on the movies.
 
@@ -27,14 +28,24 @@ This application uses Open Movie Database API to perform an instant search on th
 
 
 ### How to build and run the application
-Building command:
+
+1- Install dependencies:
+
+`npm isntall`
+
+2- Build the project with Parcel:
+
 `npm run build`
 
-To run the applilcation and start the server:
+3- Start the server
+
 `npm run start`
 
-### Responsives
+### Notes on implementation
 
-### Performance
+#### Responsives
+The page design has been done solely with CSS. Flexbox layout model has been used to ensure responsiveness of the multi-column layout.
 
-### Network Requests
+#### Performance
+
+#### Network Requests
