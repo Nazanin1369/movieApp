@@ -124,6 +124,7 @@ class MovieCard extends HTMLElement {
             line-height: 2rem;
             padding: 10px;
             z-index: 2;
+            min-height: 300px;
             text-align: left;}
             .overlay p > strong {
                 padding-right: 5px;}
@@ -174,7 +175,8 @@ class MovieCard extends HTMLElement {
                     max-height: 100px;}
             .overlay {
                 font-size: 10px;
-                line-height: .5rem;
+                min-height: 100px;
+                line-height: 1rem;
                 padding: 2px;
                 z-index: 2;} }`;
 

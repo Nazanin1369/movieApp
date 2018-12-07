@@ -70,6 +70,9 @@ class MovieSearch extends HTMLElement {
                     width: 100%;
                     padding: 0.2rem;
                     margin-right: 15px;}
+                    .button__clear:before {
+                        right: -15%;
+                        top: -35%;}
                     .search__input {
                         font-size: .8rem;
                     }}`;
@@ -80,6 +83,7 @@ class MovieSearch extends HTMLElement {
         let clearBtn = document.createElement('button');
 
         searchContainer.setAttribute('class', 'search__container');
+        searchForm.setAttribute('name', 'search');
         searchInput.setAttribute('class', 'search__input');
         searchInput.setAttribute('type', 'text');
         searchInput.setAttribute('required', 'true');
@@ -100,6 +104,7 @@ class MovieSearch extends HTMLElement {
     connectedCallback() {
         // Attach Event Listeners
         this._searchInput = this.shadowRoot.querySelector('.search__input');
+        this._searchForm = this.shadowRoot.querySelector('form[name="search"]');
         this._preventFormSubmission();
         this._bindInputEvents();
     }
@@ -109,6 +114,14 @@ class MovieSearch extends HTMLElement {
     }
 
     _bindInputEvents() {
+        this._inputSubscription = fromEvent(this._searchForm, 'reset')
+        .pipe(debounceTime(150))
+        .subscribe(event => {
+            ApiService.searchByTitle('Strange').then(movies => {
+                DomService.drawMovieCards(movies);
+            });
+        });
+
         this._inputSubscription = fromEvent(this._searchInput, 'keyup')
         .pipe(map(e => e.target.value === '' ?  'Strange' : e.target.value))
         .pipe(debounceTime(750))
