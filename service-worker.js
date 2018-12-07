@@ -7,8 +7,7 @@ var filesToCache = [
   '/styles/inline.css',
   '/index.js',
   '/src/components/movie-search.js',
-  '/images/popcorn.webp',
-  '/offline.html',
+  '/images/popcorn.webp'
   '/'
 ];
 
