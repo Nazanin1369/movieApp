@@ -82,6 +82,8 @@ having acceptable design in smaller devices.
 * Service Workers and offline
 
 * Browser Compatibility
+This application is compatible with Chrome and Firefox.
+I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer. Happily they soon are replaced with Chrome based browsers.
 
 
 ### Testing
