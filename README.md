@@ -81,6 +81,8 @@ having acceptable design in smaller devices.
 
 * Service Workers and offline
 
+* Browser Compatibility
+
 
 ### Testing
 
