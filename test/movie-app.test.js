@@ -9,6 +9,5 @@ Scenario('test something', (I) => {
     I.seeElement('movie-card[title="Strange Days"]');
     I.seeElement('movie-card[title="Strange Wilderness"]');
     I.seeElement('movie-search');
-    
     pause()
 });
