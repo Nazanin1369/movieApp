@@ -1,0 +1,20 @@
+{
+  "tests": "./*.test.js",
+  "timeout": 10000,
+  "output": "./output",
+  "helpers": {
+    "Puppeteer" : {
+      "url": "http://localhost:1234",
+      "waitForNavigation": "networkidle0",
+      "waitForAction": 500,
+      "show": "true",
+      "chrome": {
+        "headless": false,
+        "ignoreHTTPSErrors": true
+      }
+    }
+  },
+  "bootstrap": false,
+  "mocha": {},
+  "name": "test"
+}

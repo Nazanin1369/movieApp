@@ -1,8 +1,8 @@
 'use strict';
 
 import NProgress from 'nprogress';
-import { fromEvent, Observable } from 'rxjs';
-import { distinctUntilChanged, debounceTime, filter, map, switchMap } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { distinctUntilChanged, debounceTime, map, switchMap } from 'rxjs/operators';
 
 import { ApiService } from '../services/apiService';
 import { DomService } from '../services/domService';
@@ -39,8 +39,8 @@ class MovieSearch extends HTMLElement {
                 background-color: transparent;
                 display: inline-block;
                 vertical-align: middle;
-              outline: 0;
-              cursor: pointer;
+                outline: 0;
+                cursor: pointer;
             }
             .button__clear:after {
                 content: "X";

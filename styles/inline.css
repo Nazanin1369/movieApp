@@ -131,6 +131,10 @@ a {
   padding-top: 60px;
   background: #141414;
   -webkit-overflow-scrolling: touch;}
+    .main:hover > movie-card {
+      opacity: .5;}
+    .main:hover > movie-card:hover {
+        opacity: 1;}
 
 .no-result__container {
   justify-content: center;}

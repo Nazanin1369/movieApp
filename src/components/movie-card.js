@@ -16,27 +16,27 @@ class MovieCard extends HTMLElement {
             box-shadow: 0 2px 2px 0 rgba(255,0,0,.14), 0 3px 1px -2px rgba(255,0,0,.2), 0 1px 5px 0 rgba(255,0,0,.12);}
 
         .card {
-          display: -webkit-flex;
-          display: -ms-flexbox;
-          display: flex;
-          border: 3px solid black;
-          -webkit-flex: 1 25%;
-              -ms-flex: 1 25%;
-                  flex: 1 25%;
-          -webkit-flex-direction: column;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-          font-size: 16px;
-          font-weight: 400;
-          height: 400px;
-          overflow: hidden;
-          min-width: 200px;
-          max-width: 200px;
-          position: relative;
-          margin: 1.5rem;
-          background: black;
-          border-radius: 2px;
-          box-sizing: border-box; }
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            border: 3px solid black;
+            -webkit-flex: 1 25%;
+                -ms-flex: 1 25%;
+                    flex: 1 25%;
+            -webkit-flex-direction: column;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            font-size: 16px;
+            font-weight: 400;
+            height: 400px;
+            overflow: hidden;
+            min-width: 200px;
+            max-width: 200px;
+            position: relative;
+            margin: 1.5rem;
+            background: black;
+            border-radius: 2px;
+            box-sizing: border-box; }
         .card:hover {
             border: 3px solid #e50914;
         }
@@ -45,65 +45,65 @@ class MovieCard extends HTMLElement {
             max-height: 300px;}
 
         .card__title {
-          -webkit-align-items: center;
-              -ms-flex-align: center;
-                  align-items: center;
-          color: #fff;
-          padding: 5px;
-          display: block;
-          display: -webkit-flex;
-          display: -ms-flexbox;
-          display: flex;
-          -webkit-justify-content: stretch;
-                    -ms-flex-pack: stretch;
-                  justify-content: stretch;
-          line-height: normal;
-          padding: 0;
-          -webkit-perspective-origin: 165px 56px;
-                  perspective-origin: 165px 56px;
-          -webkit-transform-origin: 165px 56px;
-                  transform-origin: 165px 56px;
-          box-sizing: border-box; }
+            -webkit-align-items: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            color: #fff;
+            padding: 5px;
+            display: block;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-justify-content: stretch;
+                        -ms-flex-pack: stretch;
+                    justify-content: stretch;
+            line-height: normal;
+            padding: 0;
+            -webkit-perspective-origin: 165px 56px;
+                    perspective-origin: 165px 56px;
+            -webkit-transform-origin: 165px 56px;
+                    transform-origin: 165px 56px;
+            box-sizing: border-box; }
 
-          .card__title.card--border {
+            .card__title.card--border {
             border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
 
         .card__title-text {
-          -webkit-align-self: flex-end;
-              -ms-flex-item-align: end;
-                  align-self: flex-end;
-          color: inherit;
-          display: block;
-          display: -webkit-flex;
-          display: -ms-flexbox;
-          display: flex;
-          font-size: 24px;
-          font-weight: 300;
-          line-height: normal;
-          overflow: hidden;
-          -webkit-transform-origin: 149px 48px;
-                  transform-origin: 149px 48px;
-          margin: 0; }
+            -webkit-align-self: flex-end;
+                -ms-flex-item-align: end;
+                    align-self: flex-end;
+            color: inherit;
+            display: block;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            font-size: 24px;
+            font-weight: 300;
+            line-height: normal;
+            overflow: hidden;
+            -webkit-transform-origin: 149px 48px;
+                    transform-origin: 149px 48px;
+            margin: 0; }
 
         .card__supporting-text {
-          color: #fff;
-          font-size: 1rem;
-          line-height: 18px;
-          overflow: hidden;
-          padding: 16px 16px;
-          width: 90%; }
-          .card__supporting-text.card--border {
-            border-bottom: 1px solid rgba(256, 256, 256, 0.1); }
+            color: #fff;
+            font-size: 1rem;
+            line-height: 18px;
+            overflow: hidden;
+            padding: 16px 16px;
+            width: 90%; }
+            .card__supporting-text.card--border {
+                border-bottom: 1px solid rgba(256, 256, 256, 0.1); }
 
-        .card__actions {
-          font-size: 12px;
-          color: #fff;
-          line-height: normal;
-          width: 100%;
-          padding: 8px;
-          box-sizing: border-box; }
-          .card__actions.card--border {
-            border-top: 1px solid rgba(256, 256, 256, 0.1); }
+            .card__actions {
+            font-size: 12px;
+            color: #fff;
+            line-height: normal;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box; }
+            .card__actions.card--border {
+                border-top: 1px solid rgba(256, 256, 256, 0.1); }
 
         .card--expand {
             -webkit-flex-grow: 1;
@@ -129,28 +129,28 @@ class MovieCard extends HTMLElement {
                 padding-right: 5px;}
 
         @-webkit-keyframes pulse {
-          0% {
+        0% {
             -webkit-transform: scale(0);
                     transform: scale(0);
             opacity: 0; }
-          50% {
+        50% {
             -webkit-transform: scale(0.99);
                     transform: scale(0.99); }
-          100% {
+        100% {
             -webkit-transform: scale(1);
                     transform: scale(1);
             opacity: 1;
             visibility: visible; } }
 
         @keyframes pulse {
-          0% {
+        0% {
             -webkit-transform: scale(0);
                     transform: scale(0);
             opacity: 0; }
-          50% {
+        50% {
             -webkit-transform: scale(0.99);
                     transform: scale(0.99); }
-          100% {
+        100% {
             -webkit-transform: scale(1);
                     transform: scale(1);
             opacity: 1;
