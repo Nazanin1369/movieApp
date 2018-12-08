@@ -97,3 +97,8 @@ To tun tests simply run:
 ```
 npm run test
 ```
+
+### Audit Results
+This application is considered a PWA. The missing features are HTTPS and HHTP2 which are out of the scope of this project.
+
+![Audits](https://drive.google.com/file/d/1o51QqvPc4xcGirSQGo6j3akYRBB43yUD/view?usp=sharing "audits")
