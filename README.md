@@ -18,7 +18,7 @@ This application uses Open Movie Database API to perform an instant search on th
 
 - Parcel
     Parcel is used for bundling JavaScript, CSS and other Assets.
-    Parcel is a lighweight bundler and it is suitable for small applications. 
+    Parcel is a lighweight bundler and it is suitable for small applications.
 
 - RxJS
     When it comes to handling events RxJS can sometimes make it really easy.

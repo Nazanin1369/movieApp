@@ -8,6 +8,7 @@ var filesToCache = [
   '/index.js',
   '/src/components/movie-search.js',
   '/images/popcorn.webp',
+  '/favicon.ico',
   '/'
 ];
 

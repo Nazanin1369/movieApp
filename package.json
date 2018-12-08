@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
-    "test": "npx codeceptjs run --steps"
+    "test": "cd test/e2e/ && npx codeceptjs run --steps"
   },
   "repository": {
     "type": "git",
