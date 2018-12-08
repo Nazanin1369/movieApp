@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Movie Search Sample App",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
@@ -21,11 +22,6 @@
   "engines": {
     "node": ">=10"
   },
-  "babel": {
-    "presets": [
-      "env"
-    ]
-  },
   "dependencies": {
     "nprogress": "^0.2.0",
     "rxjs": "^6.3.3",
@@ -33,9 +29,8 @@
     "src": "^1.1.2"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
     "codeceptjs": "^1.4.6",
+    "eslint": "^5.10.0",
     "mocha": "^5.2.0",
     "parcel-bundler": "^1.10.3",
     "parcel-plugin-sw-precache": "^1.0.3",

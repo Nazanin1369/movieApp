@@ -7,9 +7,9 @@ const config = {
       'url': 'http://localhost:1234',
       'waitForNavigation': 'networkidle0',
       'waitForAction': 500,
-      'show': 'true',
+      'show': !process.env.HEADLESS || true,
       'chrome': {
-        'headless': false,
+        'headless': process.env.HEADLESS || false,
         'ignoreHTTPSErrors': true
       }
     },

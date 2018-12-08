@@ -35,13 +35,7 @@ This application uses Open Movie Database API to perform an instant search on th
 npm isntall
 ```
 
-2- Build the project with Parcel:
-
-```
-npm run build
-```
-
-3- Start the server
+3- Build and Start the server
 
 ```
 npm run start
@@ -50,8 +44,7 @@ npm run start
 ### Notes on implementation
 
 #### Responsives
-The page design has been done solely with CSS. Flexbox layout model has been used to ensure responsiveness of the multi-column layout. In addition to flexbox, utilization of media queries for different view sizes enabled 
-having acceptable design in smaller devices.
+    The page design has been done solely with CSS. Flexbox layout model has been used to ensure responsiveness of the multi-column layout. In addition to flexbox, utilization of media queries for different view sizes enabled having acceptable design in smaller devices.
 
 #### Performance and Network requests
 
@@ -79,16 +72,26 @@ having acceptable design in smaller devices.
 
 * Application Shell Architecture
 
+    The application shell architecture is a set of standards that focus on providing a fast-loading experience to users, pioneered by Google. Using an app shell architecture allows you to give your progressive web apps similar properties of native apps, like instant loading and regular updates.
+    In this application we leveraged this architecture to instanyly render the shell of application before rendering other assets to provide a smooth experience. This specially will help smooth up the loading experience over slow network connection.
+    Read more about application shell architecture [here](https://developers.google.com/web/fundamentals/architecture/app-shell)
+
 * Service Workers and offline
 
+    Of couse, when it comes to PWAs offline experience is a must. Network connections are not always reliable and based on research users will not feel good seeing nothing can load on their application when they have poor or no connection. Here we impkemented a simple approach for service-workers.
+    When the request contains the API URL, the app is asking for fresh movie data. In this case, the service worker always goes to the network and then caches the response. This is called the "Cache then netwo strategy. Otherwise it will load the cached application shell.
+    All logic for service workers can be found at ./service-worker.js
+
 * Browser Compatibility
-This application is compatible with Chrome and Firefox.
-I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer. Happily they soon are replaced with Chrome based browsers.
+
+    This application is compatible with Chrome and Firefox.
+    I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer. Happily they soon are replaced with Chrome based browsers.
 
 
 ### Testing
 
-[CodeceptJS](https://codecept.io/) and Puppeteer has been used for end-to-end testing of this application.
+[CodeceptJS](https://codecept.io/) and [Puppeteer](https://github.com/GoogleChrome/puppeteer) has been used for end-to-end testing of this application.
+
 To tun tests simply run:
 
 ```
