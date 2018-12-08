@@ -14,7 +14,7 @@ export class DomService {
         contentContainer.innerHTML = '';
 
         if(typeof movies  === 'undefined') {
-            this.displayErrorContainer();
+            this.displayNoResult();
             return;
         }
 
@@ -29,7 +29,7 @@ export class DomService {
             }
             contentContainer.appendChild(documentFragmentEl);
         } else {
-            this.displayNoResult();
+            this.displayErrorContainer();
         }
     }
 
