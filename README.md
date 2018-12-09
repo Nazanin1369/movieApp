@@ -105,5 +105,5 @@ This application is considered a PWA. The missing features are HTTPS and HHTP2 w
 
 
 ### Future Enhancements
-- Enable Virtual Scrolling so more movie fetch from the server on the scroll
+- Enable Virtual Scrolling so that more movies fetch from the server when user scroll down
 - Fix the issue with Parcel not being able to attach style to web components at run-time
