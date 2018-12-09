@@ -2,6 +2,7 @@
 
 import NProgress from 'nprogress';
 
+const API_PATH = 'http://www.omdbapi.com/?apikey=aba065d3';
 /**
  * Service to interface OMDB API
  */
@@ -13,7 +14,7 @@ export class ApiService  {
      */
     static searchByTitle (title)  {
         NProgress.start();
-        return fetch(`http://www.omdbapi.com/?apikey=aba065d3&s=${title}`)
+        return fetch(`${API_PATH}&s=${title}`)
             .then(response => response.json())
             .then(data => {
                 NProgress.done();
@@ -31,7 +32,7 @@ export class ApiService  {
      * @returns {Promise} fetch Promise
      */
     static searchByImdbId(imdbId) {
-        return fetch(`http://www.omdbapi.com/?apikey=aba065d3&i=${imdbId}`)
+        return fetch(`${API_PATH}&i=${imdbId}`)
             .then(response => response.json())
             .then(data => data)
             .catch(error => {

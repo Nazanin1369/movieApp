@@ -10,7 +10,7 @@ export class DomService {
      */
     static drawMovieCards(movies) {
         let documentFragmentEl = document.createDocumentFragment();
-        const contentContainer = document.getElementsByClassName('main')[0];
+        const contentContainer = document.getElementsByClassName('container')[0];
         contentContainer.innerHTML = '';
 
         if(typeof movies  === 'undefined') {
@@ -52,7 +52,7 @@ export class DomService {
      * @param {string} message  message to display inside the main container
      */
     static createMessageContainer(message) {
-        const contentContainer = document.getElementsByClassName('main')[0];
+        const contentContainer = document.getElementsByClassName('container')[0];
         const noResultEl = document.createElement('div');
         const pEl = document.createElement('p');
         contentContainer.innerHTML = '';

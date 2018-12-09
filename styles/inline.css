@@ -89,7 +89,7 @@ a {
   z-index: 1000; }
   .header__title {
     font-weight: 400;
-    font-size: 20px;
+    font-size: 2vw;
     padding-left: 10px;
     margin: 0;
     -webkit-box-flex: 1;
@@ -119,22 +119,42 @@ a {
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-justify-content: flex-start;
-          justify-content: flex-start;
-      -ms-flex-pack: flex-start;
-          align-items: flex-start;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
+      -ms-flex-pack: center;
+          align-items: center;
   overflow-x: hidden;
   overflow-y: auto;
-  margin: 0 3%;
+  margin: auto;
   padding-top: 60px;
-  background: #141414;
   -webkit-overflow-scrolling: touch;}
-    .main:hover > movie-card {
+
+  .container{
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    -webkit-box-flex: 1 0 21%;
+    -webkit-flex: 1 0 21%;
+      -ms-flex: 1 0 21%;
+          flex: 1 0 21%;
+    margin: 0 5%;
+    -webkit-overflow-scrolling: touch;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-justify-content: space-evenly;
+            justify-content: space-evenly;       
+    -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  }
+    .container:hover > movie-card {
       opacity: .5;}
-    .main:hover > movie-card:hover {
+    .container:hover > movie-card:hover {
         opacity: 1;}
 
 .no-result__container {
@@ -206,56 +226,20 @@ a {
 }
 
 
-@media screen and (max-width: 600px) {
-  .card {
-    -webkit-flex: 1 50%;
-        -ms-flex: 1 50%;
-            flex: 1 50%;
-    max-width: 100%; }
-  
+@media screen and (max-width: 620px) {
   #header {
-    display: none;}  
+    display: none;}
 }
 
-@media screen and (min-width: 500px) and (max-width: 1000px){
+@media screen and (min-width: 600px) and (max-width: 1000px){
   .card {
     -webkit-flex: 1 33%;
         -ms-flex: 1 33%;
-            flex: 1 33%;
-    max-width: 100%; }
+            flex: 1 33%; }
 
   .search__container {
     width: 90%; }
 }
-
-.tooltip {
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  -webkit-transform-origin: top center;
-          transform-origin: top center;
-  z-index: 999;
-  background: rgba(97,97,97, 0.9);
-  border-radius: 2px;
-  color: rgb(255,255,255);
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 14px;
-  max-width: 170px;
-  position: fixed;
-  top: -500px;
-  left: -500px;
-  padding: 8px;
-  text-align: center; }
-
-.tooltip.is-active {
-  -webkit-animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
-          animation: pulse 200ms cubic-bezier(0, 0, 0.2, 1) forwards; }
-
-.tooltip--large {
-  line-height: 14px;
-  font-size: 14px;
-  padding: 16px; }
 
 @-webkit-keyframes pulse {
   0% {

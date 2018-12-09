@@ -26,7 +26,7 @@ class MovieSearch extends HTMLElement {
                 width: 100%;
                 outline: none;
                 padding: .375rem .75rem;
-                font-size: 1rem;
+                font-size: 1vw;
                 line-height: .5rem;
                 color: #495057;
                 background-color: #fff;
@@ -63,7 +63,7 @@ class MovieSearch extends HTMLElement {
                 .search__input:not(:valid) ~ .button__clear {
                     display: none;}
 
-            @media screen and (max-width: 500px) {
+            @media screen and (max-width: 620px) {
                 .search__container {
                     top: -5%;
                     left: 5px;
@@ -74,7 +74,7 @@ class MovieSearch extends HTMLElement {
                         right: -15%;
                         top: -35%;}
                     .search__input {
-                        font-size: .8rem;
+                        font-size: 2vw;
                     }}`;
 
         let searchContainer = document.createElement('div');

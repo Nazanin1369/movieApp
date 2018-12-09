@@ -20,21 +20,22 @@ class MovieCard extends HTMLElement {
             display: -ms-flexbox;
             display: flex;
             border: 3px solid black;
-            -webkit-flex: 1 25%;
-                -ms-flex: 1 25%;
-                    flex: 1 25%;
+            -webkit-flex: 1 calc(25% - 10px);
+                -ms-flex: 1 calc(25% - 10px);
+                    flex: 1 calc(25% - 10px);
             -webkit-flex-direction: column;
                 -ms-flex-direction: column;
                     flex-direction: column;
-            font-size: 16px;
+            -webkit-justify-content: space-evenly;
+                    justify-content: space-evenly;
+            font-size: 2vw;
             font-weight: 400;
-            height: 400px;
+            height: 300px;
             overflow: hidden;
-            min-width: 200px;
-            max-width: 200px;
+            min-width: calc(100vw * (1/6));
+            max-width: calc(100vw * (1/6));
             position: relative;
-            margin: 1.5rem;
-            background: black;
+            background: back;
             border-radius: 2px;
             box-sizing: border-box; }
         .card:hover {
@@ -42,7 +43,9 @@ class MovieCard extends HTMLElement {
         }
 
         .card__image {
-            max-height: 300px;}
+            max-height: 200px;
+            min-width: calc(100vw * (1/6));
+        }
 
         .card__title {
             -webkit-align-items: center;
@@ -55,10 +58,11 @@ class MovieCard extends HTMLElement {
             display: -ms-flexbox;
             display: flex;
             -webkit-justify-content: stretch;
-                        -ms-flex-pack: stretch;
+                    -ms-flex-pack: stretch;
                     justify-content: stretch;
             line-height: normal;
             padding: 0;
+            max-height: 70%;
             -webkit-perspective-origin: 165px 56px;
                     perspective-origin: 165px 56px;
             -webkit-transform-origin: 165px 56px;
@@ -73,11 +77,10 @@ class MovieCard extends HTMLElement {
                 -ms-flex-item-align: end;
                     align-self: flex-end;
             color: inherit;
-            display: block;
             display: -webkit-flex;
             display: -ms-flexbox;
             display: flex;
-            font-size: 24px;
+            font-size: 1vw;
             font-weight: 300;
             line-height: normal;
             overflow: hidden;
@@ -87,23 +90,23 @@ class MovieCard extends HTMLElement {
 
         .card__supporting-text {
             color: #fff;
-            font-size: 1rem;
+            font-size: 1vw;
             line-height: 18px;
             overflow: hidden;
-            padding: 16px 16px;
+            padding-left: .5rem;
+            max-height: 20%;
             width: 90%; }
             .card__supporting-text.card--border {
                 border-bottom: 1px solid rgba(256, 256, 256, 0.1); }
 
             .card__actions {
-            font-size: 12px;
-            color: #fff;
-            line-height: normal;
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box; }
-            .card__actions.card--border {
-                border-top: 1px solid rgba(256, 256, 256, 0.1); }
+                color: #fff;
+                line-height: normal;
+                width: 100%;
+                max-height: 10%;
+                box-sizing: border-box; }
+                .card__actions.card--border {
+                    border-top: 1px solid rgba(256, 256, 256, 0.1); }
 
         .card--expand {
             -webkit-flex-grow: 1;
@@ -120,11 +123,11 @@ class MovieCard extends HTMLElement {
             transition: .5s ease;
             opacity:0;
             color: white;
-            font-size: 12px;
+            font-size: 1vw;
             line-height: 2rem;
             padding: 10px;
             z-index: 2;
-            min-height: 300px;
+            min-height: 200px;
             text-align: left;}
             .overlay p > strong {
                 padding-right: 5px;}
@@ -157,27 +160,19 @@ class MovieCard extends HTMLElement {
             opacity: 1;
             visibility: visible; } }
 
-        @media screen and (max-width: 500px) {
+        @media screen and (max-width: 600px) {
             .card {
-                min-width: 100px;
-                max-width: 100px;
-                min-height: 200px;
-                max-height: 200px;
-                margin: 0.3rem;}
+                min-width: calc(100vw * (1/4));
+                max-width: calc(100vw * (1/4));}
+                .card__action-image {
+                    width: 10px;
+                    height: 10px;}
                 .card__supporting-text {
-                    color: #fff;
-                    font-size: .7rem;
-                    padding: 2px;
-                    width: 90%;}
-                .card__image {
-                    min-width: 100px;
-                    max-width: 100px;
-                    max-height: 100px;}
+                    font-size: 2vw;}
             .overlay {
-                font-size: 10px;
-                min-height: 100px;
-                line-height: 1rem;
-                padding: 2px;
+                min-height: 200px;
+                line-height: .8rem;
+                padding: 5px;
                 z-index: 2;} }`;
 
         // Create Card Elements
