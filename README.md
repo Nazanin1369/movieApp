@@ -43,7 +43,8 @@ npm run start
 
 ### Notes on implementation
 
-#### Responsives
+#### Responsiveness
+
     The page design has been done solely with CSS. Flexbox layout model has been used to ensure responsiveness of the multi-column layout. In addition to flexbox, utilization of media queries for different view sizes enabled having acceptable design in smaller devices.
 
 #### Performance and Network requests
