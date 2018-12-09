@@ -82,7 +82,7 @@ npm run start
     When the request contains the API URL, the app is asking for fresh movie data. In this case, the service worker always goes to the network and then caches the response. This is called the "Cache then netwo strategy. Otherwise it will load the cached application shell.
     All logic for service workers can be found at ./service-worker.js
 
-* Browser Compatibility
+#### Browser Compatibility
 
     This application is compatible with Chrome and Firefox.
     I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer. Happily they soon are replaced with Chrome based browsers.
@@ -102,4 +102,8 @@ npm run test
 This application is considered a PWA. The missing features are HTTPS and HHTP2 which are out of the scope of this project.
 
 ![Audits](./images/audit.png "audits")
->>>>>>> Stashed changes
+
+
+### Future Enhancements
+- Enable Virtual Scrolling so more movie fetch from the server on the scroll
+- Fix the issue with Parcel not being able to attach style to web components at run-time

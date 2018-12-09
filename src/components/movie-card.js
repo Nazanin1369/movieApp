@@ -273,7 +273,7 @@ class MovieCard extends HTMLElement {
 
     _showOverlay(event) {
         const imdbID = event.target.getAttribute('imdbid');
-        const that = this;
+        this._removeDefaultTooltip();
         this._timer = setTimeout(() => {
             ApiService.searchByImdbId(imdbID)
                 .then(detail => this._drawOverlay(detail));
@@ -285,6 +285,7 @@ class MovieCard extends HTMLElement {
         let overlay = this.shadowRoot.querySelector('.overlay');
         overlay.style.opacity = '0';
         overlay.classList.remove('is-active');
+        this._addBackDefaultTitle();
     }
 
     _drawOverlay(detail) {
@@ -296,6 +297,17 @@ class MovieCard extends HTMLElement {
 
         overlay.style.opacity = '1';
         overlay.classList.add('is-active');
+    }
+
+    _removeDefaultTooltip() {
+        const title = this.getAttribute('title');
+        this.setAttribute('temp-title', title);
+        this.removeAttribute('title');
+    }
+
+    _addBackDefaultTitle() {
+        const tempTitle = this.getAttribute('temp-title');
+        this.setAttribute('title', tempTitle);
     }
 
     disconnectedCallback() {
