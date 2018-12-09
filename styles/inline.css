@@ -122,12 +122,13 @@ a {
   -webkit-flex-direction: row;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          align-items: center;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+      -ms-flex-pack: flex-start;
+          align-items: flex-start;
   overflow-x: hidden;
   overflow-y: auto;
-  margin: auto;
+  margin: 0 3%;
   padding-top: 60px;
   background: #141414;
   -webkit-overflow-scrolling: touch;}
