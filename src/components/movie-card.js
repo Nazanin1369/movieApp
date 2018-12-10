@@ -208,8 +208,8 @@ class MovieCard extends HTMLElement {
             cardImageEl.setAttribute('src', moviePoster);
         }
 
-        this.shadowRoot.querySelector('.card__supporting-text > p:first-child').textContent = movieTitle;
-        this.shadowRoot.querySelector('.card__supporting-text > small:last-child').textContent = movieType;
+        this.shadowRoot.querySelector('.card__supporting-text > p').textContent = movieTitle;
+        this.shadowRoot.querySelector('.card__supporting-text > small').textContent = movieType;
         this.shadowRoot.querySelector('.card__supporting-text').setAttribute('imdbID', movieImdb);
     }
 

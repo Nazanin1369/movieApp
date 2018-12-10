@@ -14,6 +14,8 @@ class MovieSearch extends HTMLElement {
         let shadow = this.attachShadow({mode: 'open'});
 
         const link = document.createElement('style');
+        // link.rel = 'stylesheet';
+        // link.href = './movie-search.css';
         link.textContent = `
         .search__container {
             width: 300px;
@@ -108,11 +110,12 @@ class MovieSearch extends HTMLElement {
     }
 
     disconnectedCallback() {
+        this._formSubscription.unsubscribe();
         this._inputSubscription.unsubscribe();
     }
 
     _bindInputEvents() {
-        this._inputSubscription = fromEvent(this._searchForm, 'reset')
+        this._formSubscription = fromEvent(this._searchForm, 'reset')
         .pipe(debounceTime(150))
         .subscribe(event => {
             ApiService.searchByTitle('Strange').then(movies => {

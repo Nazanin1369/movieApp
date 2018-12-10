@@ -231,8 +231,7 @@ a {
 
 @media screen and (max-width: 620px) {
   #header {
-    display: none;}
-}
+    display: none;} }
 
 @media screen and (min-width: 600px) and (max-width: 1000px){
   .card {
@@ -241,8 +240,7 @@ a {
             flex: 1 33%; }
 
   .search__container {
-    width: 90%; }
-}
+    width: 90%; } }
 
 @-webkit-keyframes pulse {
   0% {

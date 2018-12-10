@@ -48,8 +48,8 @@ export class DomService {
     }
 
     /**
-     * @description     Creates the message container and attaches it to the main container
-     * @param {string} message  message to display inside the main container
+     * @description     Creates the message container and attaches it to the container
+     * @param {string} message  message to display inside the container
      */
     static createMessageContainer(message) {
         const contentContainer = document.getElementsByClassName('container')[0];

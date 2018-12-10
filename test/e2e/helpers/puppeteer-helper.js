@@ -31,7 +31,7 @@ class PuppeteerHelper extends Helper {
 
         await page
             .evaluateHandle((mTitle) =>  {
-                const item =  document.querySelector(`movie-card[title="${mTitle}"]`).shadowRoot.querySelector('.card__supporting-text');
+                const item =  document.querySelector(`movie-card[movie-title="${mTitle}"]`).shadowRoot.querySelector('.card__supporting-text');
                 const event = new MouseEvent('mouseenter');
                 item.dispatchEvent(event);
                 return item;
@@ -43,7 +43,7 @@ class PuppeteerHelper extends Helper {
 
         await page
             .evaluateHandle((mTitle, content) =>  {
-                const item =  document.querySelector(`movie-card[title="${mTitle}"]`).shadowRoot;
+                const item =  document.querySelector(`movie-card[movie-title="${mTitle}"]`).shadowRoot;
                 if( item.querySelector('.titleP').innerHTML=== '<strong>Title:</strong>Strange Days') {
                     console.log('Valid title');
                 } else {
