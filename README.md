@@ -85,8 +85,8 @@ npm run start
 
 #### Browser Compatibility
 
-    This application is compatible with Chrome and Firefox.
-    I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer. Happily they soon are replaced with Chrome based browsers.
+    This application is compatible with Chrome(v.70+) and Firefox(v.63+).
+    I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer.
 
 
 ### Testing
@@ -105,7 +105,8 @@ This application is considered a PWA. The missing features are HTTPS and HHTP2 w
 ![Audits](./images/audit.png "audits")
 
 
-### Future Enhancements
-- Enable Virtual Scrolling so that more movies fetch from the server when user scroll down
-- Fix the issue with Parcel not being able to attach style to web components at run-time
-- Resize API images to be able to keep the ratio aspect
+### Possible Enhancements
+- Enable Virtual Scrolling so that more movies fetch from the server when user scroll down.
+- Fix the issue with Parcel not being able to import the web component linked style.
+- Resize API images to keep the right aspect ratio.
+- Enable using webp image extentions on Chrome only.
