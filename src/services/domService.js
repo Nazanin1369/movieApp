@@ -21,7 +21,7 @@ export class DomService {
         if (movies.length > 0) {
             for(let movie of movies) {
                 let itemEl = document.createElement('movie-card');
-                itemEl.setAttribute('title', movie.Title);
+                itemEl.setAttribute('movie-title', movie.Title);
                 itemEl.setAttribute('poster', movie.Poster);
                 itemEl.setAttribute('type', movie.Type);
                 itemEl.setAttribute('imdbID', movie.imdbID);

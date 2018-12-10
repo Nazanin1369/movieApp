@@ -16,17 +16,14 @@ class MovieSearch extends HTMLElement {
         const link = document.createElement('style');
         link.textContent = `
         .search__container {
-            position: relative;
-            top: -35%;
-            right: 0%;
-            width: 400px;
+            width: 300px;
             padding: 0.5rem;
-            margin-right: 20px;}
+            margin: -5px 5px}
             .search__input {
                 width: 100%;
                 outline: none;
-                padding: .375rem .75rem;
-                font-size: 1vw;
+                padding: .65rem .75rem;
+                font-size: 1.2rem;
                 line-height: .5rem;
                 color: #495057;
                 background-color: #fff;
@@ -49,11 +46,11 @@ class MovieSearch extends HTMLElement {
                 height: 15px;
                 position: absolute;
                 z-index:1;
-                top: -30%;
+                top: 5%;
                 bottom: 0;
                 right: 0;
                 margin: auto;
-                padding: 2px;
+                padding: 15px;
                 border-radius: 50%;
                 text-align: center;
                 color: #141414;;
@@ -65,17 +62,18 @@ class MovieSearch extends HTMLElement {
 
             @media screen and (max-width: 620px) {
                 .search__container {
-                    top: -5%;
-                    left: 5px;
-                    width: 100%;
-                    padding: 0.2rem;
-                    margin-right: 15px;}
-                    .button__clear:before {
-                        right: -15%;
-                        top: -35%;}
+                    width: 70vw;
+                    padding: 0.2rem;}
+                    .button__clear:after {
+                        right: 10%;
+                        top: -5%;}
                     .search__input {
-                        font-size: 2vw;
-                    }}`;
+                        font-size: 1.2rem;
+                    }}
+            @media screen and (max-width: 330px) {
+                .button__clear:after {
+                    right: 5%;
+                    top: -5%;}}`;
 
         let searchContainer = document.createElement('div');
         let searchForm = document.createElement('form');
