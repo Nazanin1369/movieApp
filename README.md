@@ -110,3 +110,5 @@ This application is considered a PWA. The missing features are HTTPS and HHTP2 w
 - Fix the issue with Parcel not being able to import the web component linked style.
 - Resize API images to keep the right aspect ratio.
 - Enable using webp image extentions on Chrome only.
+
+### Total time spent: 4hrs & 35 mins
