@@ -45,7 +45,7 @@ npm run start
 
 #### Responsiveness
 
-    The page design has been done solely with CSS. Flexbox layout model has been used to ensure responsiveness of the multi-column layout. In addition to flexbox, utilization of media queries for different view sizes enabled having acceptable design in smaller devices.
+ The page design has been done solely with CSS. Flexbox layout model has been used to ensure responsiveness of the multi-column layout. In addition to flexbox, utilization of media queries for different view sizes enabled having acceptable design in smaller devices.
 
 #### Performance and Network requests
 
@@ -85,8 +85,8 @@ npm run start
 
 #### Browser Compatibility
 
-    This application is compatible with Chrome(v.70+) and Firefox(v.63+).
-    I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer.
+  This application is compatible with Chrome(v.70+) and Firefox(v.63+).
+  I used web components for modularity and it did took away the compatibility for Microsoft Edge and Internet Explorer.
 
 
 ### Testing
